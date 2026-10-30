@@ -596,12 +596,53 @@ function continueGame() {
 function showRoundIntro() {
   setLevel();
   const level = getAILevel();
-  const diff = level === 1 ? 'Easy' : level === 2 ? 'Medium' : 'Hard';
-  setText('roundIntroTitle', 'ROUND ' + round);
+  const ranks = { 1: 'Cadet', 2: 'Captain', 3: 'Admiral' };
+  const rank = ranks[level] || 'Cadet';
+  setText('roundIntroTitle', 'ROUND ' + round + ' / ' + MAX_ROUNDS);
   setText('roundIntroEnv', currentEnv.name);
-  setText('roundIntroDiff', 'Difficulty: ' + diff);
-  setText('roundIntroUpgrade', 'Fire interval: ' + playerFireDelay + ' ms');
+  setText('roundIntroDiff', 'Enemy rank: ' + rank);
+
+  let upgradeMsg = 'Best of 3 battles';
+  if (round === 1) {
+    upgradeMsg += ' · Standard fire rate';
+  } else {
+    const improved = Math.round((PLAYER_BASE_FIRE - playerFireDelay) / PLAYER_FIRE_UPGRADE);
+    if (improved > 0) {
+      upgradeMsg += ' · Fire rate +' + improved + ' upgrade' + (improved > 1 ? 's' : '');
+    } else {
+      upgradeMsg += ' · Fire rate ready';
+    }
+  }
+  setText('roundIntroUpgrade', upgradeMsg);
+
+  const btn = $('roundReadyBtn');
+  const hint = $('roundIntroHint');
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'READY ▶';
+  }
+  if (hint) {
+    hint.style.display = '';
+    setText('roundIntroHint', 'Read the briefing…');
+  }
   showScreen('roundIntro');
+
+  const READ_MS = 1800;
+  const start = performance.now();
+  function tickRead() {
+    const left = Math.max(0, READ_MS - (performance.now() - start));
+    if (left > 0) {
+      if (hint) setText('roundIntroHint', 'Read the briefing… ' + Math.ceil(left / 1000) + 's');
+      requestAnimationFrame(tickRead);
+    } else {
+      if (hint) setText('roundIntroHint', 'Tap READY when you are set');
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'READY ▶';
+      }
+    }
+  }
+  requestAnimationFrame(tickRead);
 }
 
 function finishChampionship() {
