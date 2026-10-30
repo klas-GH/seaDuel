@@ -4,6 +4,12 @@ A fast mobile-friendly naval duel mini-game.
 
 Blue ship vs red AI ship on a wrapping ocean. First to 2 battle wins takes the round. 11 rounds decide the champion.
 
+## 🎮 Play now
+
+**https://klas-gh.github.io/seaDuel/**
+
+*(If the link is still 404, enable Pages once — see below.)*
+
 ## Controls
 
 **Keyboard**
@@ -22,16 +28,21 @@ Blue ship vs red AI ship on a wrapping ocean. First to 2 battle wins takes the r
 - Boost with visual glow + trail
 - Responsive layout for phone & desktop
 
-## Play
+## Enable GitHub Pages (one-time)
 
-Open `index.html` in any modern browser, or serve the folder locally.
+1. Open the repo → **Settings** → **Pages**
+2. Under **Build and deployment** → **Source**, choose **GitHub Actions**
+3. Wait ~1 minute for the workflow to finish
+4. The game will be live at the link above
+
+Or serve locally:
 
 ```bash
 python3 -m http.server
 ```
 
-Then visit `http://localhost:8000`
+Then open `http://localhost:8000`
 
 ## Version
 
-**v1.0.4** — 22 s boost cooldown, boost visual polish, tap-fire fix, cleanup.
+**v1.0.4** — 22 s boost cooldown, boost visual polish, tap-fire fix, cleanup + Pages deploy.
