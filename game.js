@@ -598,22 +598,14 @@ function showRoundIntro() {
   const level = getAILevel();
   const ranks = { 1: 'Cadet', 2: 'Captain', 3: 'Admiral' };
   const rank = ranks[level] || 'Cadet';
-  setText('roundIntroTitle', 'ROUND ' + round + ' / ' + MAX_ROUNDS);
+  setText('roundIntroTitle', 'ROUND ' + round + '/' + MAX_ROUNDS);
   setText('roundIntroEnv', currentEnv.name);
-  setText('roundIntroDiff', 'Enemy rank: ' + rank);
+  setText('roundIntroDiff', rank);
 
-  let upgradeMsg = 'Best of 3 battles';
-  if (round === 1) {
-    upgradeMsg += ' · Standard fire rate';
-  } else {
-    const improved = Math.round((PLAYER_BASE_FIRE - playerFireDelay) / PLAYER_FIRE_UPGRADE);
-    if (improved > 0) {
-      upgradeMsg += ' · Fire rate +' + improved + ' upgrade' + (improved > 1 ? 's' : '');
-    } else {
-      upgradeMsg += ' · Fire rate ready';
-    }
-  }
-  setText('roundIntroUpgrade', upgradeMsg);
+  const improved = Math.round((PLAYER_BASE_FIRE - playerFireDelay) / PLAYER_FIRE_UPGRADE);
+  setText('roundIntroUpgrade', improved > 0
+    ? 'Best of 3 · Fire +' + improved
+    : 'Best of 3');
 
   const btn = $('roundReadyBtn');
   const hint = $('roundIntroHint');
@@ -621,21 +613,18 @@ function showRoundIntro() {
     btn.disabled = true;
     btn.textContent = 'READY ▶';
   }
-  if (hint) {
-    hint.style.display = '';
-    setText('roundIntroHint', 'Read the briefing…');
-  }
+  if (hint) setText('roundIntroHint', '');
   showScreen('roundIntro');
 
-  const READ_MS = 1800;
+  const READ_MS = 1500;
   const start = performance.now();
   function tickRead() {
     const left = Math.max(0, READ_MS - (performance.now() - start));
     if (left > 0) {
-      if (hint) setText('roundIntroHint', 'Read the briefing… ' + Math.ceil(left / 1000) + 's');
+      if (hint) setText('roundIntroHint', Math.ceil(left / 1000) + '…');
       requestAnimationFrame(tickRead);
     } else {
-      if (hint) setText('roundIntroHint', 'Tap READY when you are set');
+      if (hint) setText('roundIntroHint', '');
       if (btn) {
         btn.disabled = false;
         btn.textContent = 'READY ▶';
