@@ -1,8 +1,8 @@
-# seaDuel v1.3.0
+# seaDuel v1.4.0
 
 **COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.**
 
-Naval arcade combat — 12-round championship, coin shop upgrades, bosses, multi-enemy fleets.
+Naval arcade combat — 12-round championship, coin shop, bosses, multi-enemy fleets, **level select**.
 
 ## Play
 
@@ -12,15 +12,20 @@ Naval arcade combat — 12-round championship, coin shop upgrades, bosses, multi
 python -m http.server 8080
 ```
 
-## Highlights (v1.3.0)
+## Highlights (v1.4.0)
 
-- **Direct-aim shells** — always fire along the on-screen line to the target (no wrap shortcut)
-- **Shells dissolve** at edges; ships still wrap
-- **Start with 1 gun**; enemy dual guns from round 4+
-- **Coin shop** after each round you win: Armour, Shells, Guns (max 3), Speed, Torpedoes
-- **Round 6 mini-boss** (1.5× size & HP) · **Round 12 final boss** (2.5× size, 2× guns, 2.5× HP)
-- **Rounds 7–10:** 2 enemies · **Round 11:** 3 enemies
-- Boss announcements on intro screens
+- **Level select** on the menu — win rounds to unlock higher start levels; jump back in without restarting from R1
+- Progress saved in localStorage (`maxUnlocked`)
+- Records show highest unlocked round
+
+### From v1.3
+
+- Direct-aim shells (on-screen line only)
+- Shells dissolve at edges; ships wrap
+- 1-gun start; enemy dual guns from round 4+
+- Coin shop: Armour, Shells, Guns (max 3), Speed, Torpedoes
+- R6 mini-boss · R12 final boss
+- R7–10: 2 enemies · R11: 3 enemies
 
 ## Controls
 
@@ -40,15 +45,16 @@ node tests/regression.mjs
 
 ## Changelog
 
+### v1.4.0
+- Level selector on intro/menu; unlock by clearing rounds
+- Persist max unlocked start level
+- Records: highest unlocked round
+
 ### v1.3.0
-- Direct on-screen aiming (no wrap fire)
-- Gun progression, coin economy + shop
-- Bosses on 6 & 12; multi-enemy 7–11
-- 12-round championship
-- Regression tests
+- Direct on-screen aiming, coin shop, bosses, multi-enemy
 
 ### v1.2.4
-- Shell dissolve at edges, −25% base speed, README refresh
+- Shell dissolve, −25% base speed, README refresh
 
 ## License
 
