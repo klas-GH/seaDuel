@@ -1,5 +1,5 @@
 /* ============================================================
-   seaDuel v1.2.2 — COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.
+   seaDuel v1.2.3 — COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.
    ============================================================ */
 
 /* // 1. CANVAS & DOM */
@@ -135,28 +135,24 @@ function angleTo(from, to) {
 
 function resize() {
   DPR = Math.min(window.devicePixelRatio || 1, 2);
-  let r = canvas.getBoundingClientRect();
-  let w = r.width, h = r.height;
-  if (w < 10 || h < 10) {
-    const arena = $('arena');
-    if (arena) {
-      const ar = arena.getBoundingClientRect();
-      w = ar.width; h = ar.height;
-    }
+  const arena = $('arena');
+  const wrapEl = $('arenaWrap');
+  if (wrapEl && wrapEl.classList.contains('active')) {
+    void wrapEl.offsetHeight;
   }
-  if (w < 10 || h < 10) {
-    const wrapEl = $('arenaWrap');
-    if (wrapEl) {
-      void wrapEl.offsetHeight;
-      const ar = ($('arena') || wrapEl).getBoundingClientRect();
-      w = ar.width; h = ar.height;
-    }
+  let w = 0, h = 0;
+  if (arena) {
+    w = arena.clientWidth || arena.getBoundingClientRect().width;
+    h = arena.clientHeight || arena.getBoundingClientRect().height;
   }
   if (w < 10 || h < 10) {
     w = Math.max(window.innerWidth || 800, 320);
-    h = Math.max((window.innerHeight || 600) - 160, 240);
+    h = Math.max((window.innerHeight || 600) - 160, 200);
   }
-  W = w; H = h;
+  W = Math.floor(w);
+  H = Math.floor(h);
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
   canvas.width = Math.max(1, Math.floor(W * DPR));
   canvas.height = Math.max(1, Math.floor(H * DPR));
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
@@ -166,7 +162,11 @@ function resize() {
 window.addEventListener('resize', resize);
 
 function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const keepArena = (id === 'pause' || id === 'message');
+  document.querySelectorAll('.screen').forEach(s => {
+    if (keepArena && s.id === 'arenaWrap') return;
+    s.classList.remove('active');
+  });
   const el = $(id);
   if (el) el.classList.add('active');
   if (id === 'arenaWrap') {
@@ -545,11 +545,12 @@ function initBattle() {
   const wrapEl = $('arenaWrap');
   if (wrapEl) void wrapEl.offsetHeight;
   resize();
-  requestAnimationFrame(() => {
+  const applySpawn = () => {
     resize();
     if (player) { player.x = W * 0.28; player.y = H * 0.72; }
     if (enemy) { enemy.x = W * 0.72; enemy.y = H * 0.22; }
-  });
+  };
+  requestAnimationFrame(() => requestAnimationFrame(applySpawn));
 
   player = makeShip(W * 0.28, H * 0.72, -Math.PI * 0.55);
   enemy = makeShip(W * 0.72, H * 0.22, Math.PI * 0.55);
@@ -623,21 +624,13 @@ function showRoundIntro() {
   setText('roundIntroTitle', 'ROUND ' + round + '/' + MAX_ROUNDS);
   setText('roundIntroEnv', currentEnv.name);
   setText('roundIntroDiff', rank);
-
   const improved = Math.round((PLAYER_BASE_FIRE - playerFireDelay) / PLAYER_FIRE_UPGRADE);
-  setText('roundIntroUpgrade', improved > 0
-    ? 'Best of 3 · Fire +' + improved
-    : 'Best of 3');
-
+  setText('roundIntroUpgrade', improved > 0 ? 'Best of 3 · Fire +' + improved : 'Best of 3');
   const btn = $('roundReadyBtn');
   const hint = $('roundIntroHint');
-  if (btn) {
-    btn.disabled = true;
-    btn.textContent = 'READY ▶';
-  }
+  if (btn) { btn.disabled = true; btn.textContent = 'READY ▶'; }
   if (hint) setText('roundIntroHint', '');
   showScreen('roundIntro');
-
   const READ_MS = 1200;
   const start = performance.now();
   function tickRead() {
@@ -647,10 +640,7 @@ function showRoundIntro() {
       requestAnimationFrame(tickRead);
     } else {
       if (hint) setText('roundIntroHint', '');
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = 'READY ▶';
-      }
+      if (btn) { btn.disabled = false; btn.textContent = 'READY ▶'; }
     }
   }
   requestAnimationFrame(tickRead);
