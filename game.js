@@ -1,5 +1,5 @@
 /* ============================================================
-   seaDuel v1.2.3 — COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.
+   seaDuel v1.2.4 — COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.
    ============================================================ */
 
 /* // 1. CANVAS & DOM */
@@ -23,9 +23,9 @@ const MAX_HP = 100;
 const PLAYER_BASE_FIRE = 660;
 const PLAYER_FIRE_UPGRADE = 35;
 const MIN_FIRE = 280;
-const PLAYER_SPEED = 110;
-const TURN_SPEED = 1.25;
-const BOOST_SPEED = 230;
+const PLAYER_SPEED = 83;   // ~25% slower base (was 110)
+const TURN_SPEED = 1.15;
+const BOOST_SPEED = 172;   // ~25% slower boost (was 230)
 const BOOST_DURATION = 2000;
 const BOOST_CD = 22000;
 const SHIELD_DURATION = 4000;
@@ -100,14 +100,15 @@ function playSound(name) {
   ensureAudio();
   if (!soundOn) return;
   switch (name) {
-    case 'fire': beep(180, 0.06, 'square', 0.06); break;
-    case 'hit': beep(120, 0.1, 'sawtooth', 0.07, -40); break;
-    case 'crit': beep(440, 0.15, 'square', 0.1); beep(660, 0.12, 'square', 0.08); break;
-    case 'explode': beep(80, 0.4, 'sawtooth', 0.12, -60); break;
-    case 'boost': beep(300, 0.2, 'sine', 0.08, 200); break;
-    case 'shield': beep(500, 0.25, 'sine', 0.07); break;
-    case 'double': beep(350, 0.15, 'triangle', 0.08, 100); break;
-    case 'torpedo': beep(90, 0.3, 'sawtooth', 0.1, -30); break;
+    case 'fire': beep(180, 0.06, 'square', 0.07); break;
+    case 'hit': beep(120, 0.1, 'sawtooth', 0.08, -40); break;
+    case 'crit': beep(440, 0.15, 'square', 0.11); beep(660, 0.12, 'square', 0.09); break;
+    case 'explode': beep(80, 0.4, 'sawtooth', 0.13, -60); break;
+    case 'boost': beep(300, 0.2, 'sine', 0.09, 200); break;
+    case 'shield': beep(500, 0.25, 'sine', 0.08); break;
+    case 'double': beep(350, 0.15, 'triangle', 0.09, 100); break;
+    case 'torpedo': beep(90, 0.3, 'sawtooth', 0.12, -30); break;
+    case 'splash': beep(140, 0.05, 'triangle', 0.03, -30); break;
     case 'win': beep(523, 0.15, 'sine', 0.1); setTimeout(() => beep(659, 0.15, 'sine', 0.1), 120); setTimeout(() => beep(784, 0.25, 'sine', 0.1), 240); break;
     case 'lose': beep(200, 0.3, 'sawtooth', 0.1, -80); break;
     case 'champ': beep(523, 0.2, 'sine', 0.12); setTimeout(() => beep(659, 0.2, 'sine', 0.12), 150); setTimeout(() => beep(784, 0.2, 'sine', 0.12), 300); setTimeout(() => beep(1046, 0.4, 'sine', 0.14), 450); break;
@@ -187,6 +188,11 @@ function setLevel() {
   }
 }
 
+function speedScale() {
+  // Base already -25%; each later round +1%
+  return 1 + (round - 1) * 0.01;
+}
+
 function getAILevel() {
   if (round <= 3) return 1;
   if (round <= 7) return 2;
@@ -196,7 +202,7 @@ function getAILevel() {
 /* // 7. COMBAT */
 function fire(shooter, target, isEnemy, multi = false) {
   const angle = angleTo(shooter, target);
-  const speed = isEnemy ? 250 : 380;
+  const speed = (isEnemy ? 200 : 300) * speedScale();
   const count = multi ? 4 : 2;
   const spread = multi ? 0.18 : 0.12;
   for (let i = 0; i < count; i++) {
@@ -335,7 +341,7 @@ function updateEnemy(dt, time) {
       break;
     }
   }
-  const speed = 40 + round * 3.5 + level * 12;
+  const speed = (30 + round * 2.6 + level * 9) * speedScale();
   const turn = 1.2 + level * 0.4;
   let da = desiredAngle - enemy.heading;
   while (da > Math.PI) da -= Math.PI * 2;
@@ -354,7 +360,7 @@ function updateEnemy(dt, time) {
 function update(dt, time) {
   oceanTime += dt;
   const boosting = gameNow() < boostUntil;
-  const speed = boosting ? BOOST_SPEED : PLAYER_SPEED;
+  const speed = (boosting ? BOOST_SPEED : PLAYER_SPEED) * speedScale();
   if (left) player.heading -= TURN_SPEED * dt;
   if (right) player.heading += TURN_SPEED * dt;
   player.x = wrap(player.x + Math.cos(player.heading) * speed * dt, W);
@@ -374,11 +380,21 @@ function update(dt, time) {
   }
   for (let i = shots.length - 1; i >= 0; i--) {
     const b = shots[i];
-    b.x = wrap(b.x + b.vx * dt, W);
-    b.y = wrap(b.y + b.vy * dt, H);
+    b.x += b.vx * dt;
+    b.y += b.vy * dt;
     b.life -= dt;
     if (b.trail) { b.trail.push({ x: b.x, y: b.y }); if (b.trail.length > 6) b.trail.shift(); }
-    if (b.life <= 0) { shots.splice(i, 1); continue; }
+    if (b.x < -8 || b.x > W + 8 || b.y < -8 || b.y > H + 8 || b.life <= 0) {
+      if (b.life > 0) {
+        particles.push({
+          x: Math.max(0, Math.min(W, b.x)),
+          y: Math.max(0, Math.min(H, b.y)),
+          life: 0.2, color: b.enemy ? '#ff6666' : '#ffe28a', size: 5, type: 'spark'
+        });
+      }
+      shots.splice(i, 1);
+      continue;
+    }
     const target = b.enemy ? player : enemy;
     if (distance(b, target) < 20) {
       const isCrit = Math.random() < CRIT_CHANCE;
@@ -389,12 +405,22 @@ function update(dt, time) {
   }
   for (let i = torpedoes.length - 1; i >= 0; i--) {
     const t = torpedoes[i];
-    t.x = wrap(t.x + t.vx * dt, W);
-    t.y = wrap(t.y + t.vy * dt, H);
+    t.x += t.vx * dt;
+    t.y += t.vy * dt;
     t.life -= dt;
     t.trail.push({ x: t.x, y: t.y });
     if (t.trail.length > 10) t.trail.shift();
-    if (t.life <= 0) { torpedoes.splice(i, 1); continue; }
+    if (t.x < -12 || t.x > W + 12 || t.y < -12 || t.y > H + 12 || t.life <= 0) {
+      if (t.life > 0) {
+        particles.push({
+          x: Math.max(0, Math.min(W, t.x)),
+          y: Math.max(0, Math.min(H, t.y)),
+          life: 0.25, color: '#ff8844', size: 7, type: 'spark'
+        });
+      }
+      torpedoes.splice(i, 1);
+      continue;
+    }
     if (distance(t, enemy) < 24) {
       damage('enemy', TORPEDO_DAMAGE, true);
       burst(enemy.x, enemy.y, '#ff8844', 18);
