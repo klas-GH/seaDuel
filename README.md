@@ -1,8 +1,8 @@
-# seaDuel v1.4.0
+# seaDuel v1.5.0
 
 **COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.**
 
-Naval arcade combat — 12-round championship, coin shop, bosses, multi-enemy fleets, **level select**.
+Naval arcade — 12-round championship, coin shop, bosses, multi-enemy, **level select**, **difficulty**.
 
 ## Play
 
@@ -12,20 +12,21 @@ Naval arcade combat — 12-round championship, coin shop, bosses, multi-enemy fl
 python -m http.server 8080
 ```
 
-## Highlights (v1.4.0)
+## Difficulty (v1.5.0)
 
-- **Level select** on the menu — win rounds to unlock higher start levels; jump back in without restarting from R1
-- Progress saved in localStorage (`maxUnlocked`)
-- Records show highest unlocked round
+| Mode | Enemy stats |
+|------|-------------|
+| **Easy** | Baseline (v1.4 balance) |
+| **Normal** | +25% HP, shell damage, speed |
+| **Hard** | +50% HP, shell damage, speed |
 
-### From v1.3
+Pick difficulty on the menu before PLAY. Choice is saved.
 
-- Direct-aim shells (on-screen line only)
-- Shells dissolve at edges; ships wrap
-- 1-gun start; enemy dual guns from round 4+
-- Coin shop: Armour, Shells, Guns (max 3), Speed, Torpedoes
-- R6 mini-boss · R12 final boss
-- R7–10: 2 enemies · R11: 3 enemies
+## Other features
+
+- Level select — unlock higher start rounds by winning
+- Direct-aim shells, edge dissolve, coin shop
+- R6 mini-boss · R12 final boss · multi-enemy R7–11
 
 ## Controls
 
@@ -45,16 +46,15 @@ node tests/regression.mjs
 
 ## Changelog
 
+### v1.5.0
+- Difficulty: Easy / Normal (+25%) / Hard (+50%) enemy attributes
+- Difficulty selector on intro menu
+
 ### v1.4.0
-- Level selector on intro/menu; unlock by clearing rounds
-- Persist max unlocked start level
-- Records: highest unlocked round
+- Level selector; unlock by clearing rounds
 
 ### v1.3.0
-- Direct on-screen aiming, coin shop, bosses, multi-enemy
-
-### v1.2.4
-- Shell dissolve, −25% base speed, README refresh
+- Direct aim, coin shop, bosses, multi-enemy
 
 ## License
 
