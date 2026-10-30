@@ -1,5 +1,5 @@
 /* ============================================================
-   seaDuel v1.2 — COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.
+   seaDuel v1.2.2 — COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.
    ============================================================ */
 
 /* // 1. CANVAS & DOM */
@@ -134,10 +134,31 @@ function angleTo(from, to) {
 }
 
 function resize() {
-  const r = canvas.getBoundingClientRect();
   DPR = Math.min(window.devicePixelRatio || 1, 2);
-  W = r.width; H = r.height;
-  canvas.width = W * DPR; canvas.height = H * DPR;
+  let r = canvas.getBoundingClientRect();
+  let w = r.width, h = r.height;
+  if (w < 10 || h < 10) {
+    const arena = $('arena');
+    if (arena) {
+      const ar = arena.getBoundingClientRect();
+      w = ar.width; h = ar.height;
+    }
+  }
+  if (w < 10 || h < 10) {
+    const wrapEl = $('arenaWrap');
+    if (wrapEl) {
+      void wrapEl.offsetHeight;
+      const ar = ($('arena') || wrapEl).getBoundingClientRect();
+      w = ar.width; h = ar.height;
+    }
+  }
+  if (w < 10 || h < 10) {
+    w = Math.max(window.innerWidth || 800, 320);
+    h = Math.max((window.innerHeight || 600) - 160, 240);
+  }
+  W = w; H = h;
+  canvas.width = Math.max(1, Math.floor(W * DPR));
+  canvas.height = Math.max(1, Math.floor(H * DPR));
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
   if (player) { player.x = wrap(player.x, W); player.y = wrap(player.y, H); }
   if (enemy) { enemy.x = wrap(enemy.x, W); enemy.y = wrap(enemy.y, H); }
@@ -520,14 +541,16 @@ function updateBattleUI() {
 
 /* // 13. BATTLE FLOW */
 function initBattle() {
+  showScreen('arenaWrap');
+  const wrapEl = $('arenaWrap');
+  if (wrapEl) void wrapEl.offsetHeight;
   resize();
-  if (W < 10 || H < 10) {
-    const r = canvas.getBoundingClientRect();
-    W = Math.max(r.width, 320);
-    H = Math.max(r.height, 240);
-    canvas.width = W * DPR; canvas.height = H * DPR;
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-  }
+  requestAnimationFrame(() => {
+    resize();
+    if (player) { player.x = W * 0.28; player.y = H * 0.72; }
+    if (enemy) { enemy.x = W * 0.72; enemy.y = H * 0.22; }
+  });
+
   player = makeShip(W * 0.28, H * 0.72, -Math.PI * 0.55);
   enemy = makeShip(W * 0.72, H * 0.22, Math.PI * 0.55);
   shots = []; particles = []; torpedoes = [];
@@ -545,7 +568,6 @@ function initBattle() {
   last = 0;
   cancelAnimationFrame(animationId);
   animationId = requestAnimationFrame(loop);
-  showScreen('arenaWrap');
   setText('hint', 'ROUND ' + round + ' — ' + currentEnv.name);
 }
 
@@ -616,7 +638,7 @@ function showRoundIntro() {
   if (hint) setText('roundIntroHint', '');
   showScreen('roundIntro');
 
-  const READ_MS = 1500;
+  const READ_MS = 1200;
   const start = performance.now();
   function tickRead() {
     const left = Math.max(0, READ_MS - (performance.now() - start));
@@ -746,6 +768,9 @@ function togglePause() {
     paused = false;
     last = 0;
     showScreen('arenaWrap');
+    const wrapEl = $('arenaWrap');
+    if (wrapEl) void wrapEl.offsetHeight;
+    resize();
     animationId = requestAnimationFrame(loop);
   } else {
     paused = true;
