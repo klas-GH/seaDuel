@@ -1,4 +1,4 @@
-# seaDuel v1.5.0
+# seaDuel v1.5.1
 
 **COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.**
 
@@ -12,13 +12,13 @@ Naval arcade — 12-round championship, coin shop, bosses, multi-enemy, **level 
 python -m http.server 8080
 ```
 
-## Difficulty (v1.5.0)
+## Difficulty (v1.5.1)
 
 | Mode | Enemy stats |
 |------|-------------|
 | **Easy** | Baseline (v1.4 balance) |
-| **Normal** | +25% HP, shell damage, speed |
-| **Hard** | +50% HP, shell damage, speed |
+| **Normal** | +25% HP, armour (DR), shell damage, speed |
+| **Hard** | +50% HP, armour (DR), shell damage, speed |
 
 Pick difficulty on the menu before PLAY. Choice is saved.
 
@@ -45,6 +45,10 @@ node tests/regression.mjs
 ```
 
 ## Changelog
+
+### v1.5.1
+- Enemy armour on Normal/Hard: damage taken ÷ mult (true armour DR)
+- Enemy shell flight speed scales with difficulty
 
 ### v1.5.0
 - Difficulty: Easy / Normal (+25%) / Hard (+50%) enemy attributes

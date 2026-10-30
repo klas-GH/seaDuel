@@ -1,4 +1,4 @@
-/* seaDuel v1.5.0 inflate */
+/* seaDuel v1.5.1 inflate */
 (async function(){
   try {
     var names = ['engine.f0','engine.f1','engine.f2','engine.f3','engine.f4','engine.f5'];
@@ -12,6 +12,6 @@
   } catch (e) {
     console.error(e);
     document.body.insertAdjacentHTML('beforeend',
-      '<div style="position:fixed;inset:0;background:#031b30;color:#fff;display:flex;align-items:center;justify-content:center;padding:24px;font-family:system-ui;z-index:9999;text-align:center"><div><h1>⚓ seaDuel v1.5</h1><p>Load failed</p><pre style="opacity:.7;font-size:12px">'+String(e)+'</pre></div></div>');
+      '<div style="position:fixed;inset:0;background:#031b30;color:#fff;display:flex;align-items:center;justify-content:center;padding:24px;font-family:system-ui;z-index:9999;text-align:center"><div><h1>⚓ seaDuel v1.5.1</h1><p>Load failed</p><pre style="opacity:.7;font-size:12px">'+String(e)+'</pre></div></div>');
   }
 })();
