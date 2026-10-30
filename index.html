@@ -3,83 +3,162 @@
 <head>
   <!-- // 1. DOCUMENT SETUP -->
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
-  <title>seaDuel v1.0.4</title>
-
-  <!-- // 2. STYLESHEET -->
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>seaDuel v1.1</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 <div id="game">
 
-  <!-- // 3. GAME HEADER -->
-  <header>
-    <span>⚓ seaDuel <small>v1.0.4</small></span>
-    <span>🏆 ROUND <b id="round">1</b>/11</span>
-    <span>🔵 <b id="score">0</b></span>
-  </header>
+  <!-- // 2. MAIN MENU -->
+  <div id="menu" class="screen active">
+    <div class="menu-inner">
+      <h1>⚓ seaDuel</h1>
+      <p class="tagline">COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.</p>
+      <p class="version">v1.1</p>
+      <button id="playBtn" class="btn primary">▶ PLAY</button>
+      <button id="howtoBtn" class="btn">📖 HOW TO PLAY</button>
+      <button id="recordsBtn" class="btn">🏆 RECORDS</button>
+      <button id="soundToggleMenu" class="btn sound-btn">🔊 SOUND: ON</button>
+    </div>
+  </div>
 
-  <!-- // 4. GAME ARENA -->
-  <main id="arena">
-    <canvas id="sea"></canvas>
-
-    <!-- // 4.1 PLAYER HEALTH -->
-    <div class="health player-health">
-      <div class="health-label">🔵 PLAYER</div>
-      <div class="health-track">
-        <div id="playerHP" class="health-fill player-fill"></div>
+  <!-- // 3. HOW TO PLAY OVERLAY -->
+  <div id="howto" class="screen">
+    <div class="panel">
+      <h2>How to Play</h2>
+      <div class="howto-grid">
+        <div>
+          <h3>Keyboard</h3>
+          <p>← → / A D — Steer</p>
+          <p>↑ / W — Boost</p>
+          <p>Space — Fire cannons</p>
+          <p>Q — Shield</p>
+          <p>E — Double Fire</p>
+          <p>R — Torpedo</p>
+          <p>Esc — Pause</p>
+        </div>
+        <div>
+          <h3>Mobile</h3>
+          <p>Left / Right — Steer</p>
+          <p>Boost button</p>
+          <p>Fire / Tap enemy</p>
+          <p>Ability buttons</p>
+        </div>
       </div>
-      <small id="playerHPText">100%</small>
+      <p class="hint">Win 2 battles to take a round. First to more rounds after 11 wins the championship.</p>
+      <button id="howtoClose" class="btn primary">GOT IT</button>
     </div>
+  </div>
 
-    <!-- // 4.2 ENEMY HEALTH -->
-    <div class="health enemy-health">
-      <div class="health-label">🔴 ENEMY</div>
-      <div class="health-track">
-        <div id="enemyHP" class="health-fill enemy-fill"></div>
+  <!-- // 4. RECORDS OVERLAY -->
+  <div id="records" class="screen">
+    <div class="panel">
+      <h2>🏆 Local Records</h2>
+      <ul id="recordsList" class="records-list"></ul>
+      <button id="resetRecordsBtn" class="btn danger">Reset Records</button>
+      <button id="recordsClose" class="btn primary">CLOSE</button>
+    </div>
+  </div>
+
+  <!-- // 5. ROUND INTRO -->
+  <div id="roundIntro" class="screen">
+    <div class="panel center">
+      <h2 id="roundIntroTitle">ROUND 1</h2>
+      <p id="roundIntroEnv" class="env-name">Tropical Ocean</p>
+      <p id="roundIntroDiff" class="diff">Difficulty: Easy</p>
+      <p id="roundIntroUpgrade" class="upgrade">Fire rate improved</p>
+      <button id="roundReadyBtn" class="btn primary">READY ▶</button>
+    </div>
+  </div>
+
+  <!-- // 6. BATTLE ARENA -->
+  <div id="arenaWrap" class="screen">
+    <header id="header">
+      <span>⚓ v1.1</span>
+      <span>ROUND <b id="round">1</b>/11</span>
+      <span>🔵 <b id="playerRounds">0</b> – <b id="enemyRounds">0</b> 🔴</span>
+      <button id="pauseBtn" class="icon-btn" title="Pause">⏸</button>
+    </header>
+
+    <main id="arena">
+      <canvas id="sea"></canvas>
+
+      <div class="health player-health">
+        <div class="health-label">🔵 PLAYER</div>
+        <div class="health-track"><div id="playerHP" class="health-fill player-fill"></div></div>
+        <small id="playerHPText">100%</small>
       </div>
-      <small id="enemyHPText">100%</small>
+
+      <div class="health enemy-health">
+        <div class="health-label">🔴 ENEMY</div>
+        <div class="health-track"><div id="enemyHP" class="health-fill enemy-fill"></div></div>
+        <small id="enemyHPText">100%</small>
+      </div>
+
+      <div id="hint">AIM & FIRE!</div>
+      <div id="battleScore">BATTLES: <b id="battleText">0 – 0</b></div>
+      <div id="critFlash"></div>
+    </main>
+
+    <!-- Ability bar -->
+    <div id="abilityBar">
+      <button id="boostBtn" class="ability-btn" data-ability="boost">
+        ⚡ BOOST<small id="boostCD">READY</small>
+      </button>
+      <button id="shieldBtn" class="ability-btn" data-ability="shield">
+        🛡 SHIELD<small id="shieldCD">READY</small>
+      </button>
+      <button id="doubleBtn" class="ability-btn" data-ability="double">
+        🔥 D-FIRE<small id="doubleCD">READY</small>
+      </button>
+      <button id="torpedoBtn" class="ability-btn" data-ability="torpedo">
+        🚀 TORP<small id="torpedoAmmo">2</small>
+      </button>
     </div>
 
-    <!-- // 4.3 GAME STATUS -->
-    <div id="hint">AIM & FIRE! 🎯</div>
+    <footer id="controls">
+      <button id="leftBtn">◀ LEFT</button>
+      <button id="fireBtn">🔥 FIRE</button>
+      <button id="rightBtn">RIGHT ▶</button>
+    </footer>
+  </div>
 
-    <div id="roundInfo">
-      BATTLES: <b id="battleScore">0 - 0</b>
+  <!-- // 7. MESSAGE / RESULT OVERLAY -->
+  <div id="message" class="screen">
+    <div class="panel center">
+      <h2 id="messageTitle">BATTLE WON!</h2>
+      <p id="messageText"></p>
+      <button id="continueBtn" class="btn primary">CONTINUE ▶</button>
     </div>
+  </div>
 
-    <!-- // 4.4 GAME OVER / ROUND ANNOUNCEMENT -->
-    <div id="message">
-      <h2 id="messageTitle">💥 SHIP DESTROYED!</h2>
-      <p id="messageText">Ready for the next battle?</p>
-      <button id="continueBtn">CONTINUE ▶</button>
+  <!-- // 8. PAUSE MENU -->
+  <div id="pause" class="screen">
+    <div class="panel center">
+      <h2>PAUSED</h2>
+      <button id="resumeBtn" class="btn primary">▶ RESUME</button>
+      <button id="restartBattleBtn" class="btn">↻ RESTART BATTLE</button>
+      <button id="soundTogglePause" class="btn sound-btn">🔊 SOUND: ON</button>
+      <button id="menuFromPauseBtn" class="btn">⌂ MAIN MENU</button>
     </div>
+  </div>
 
-    <!-- // 4.5 HELP -->
-    <div id="help">
-      ← → STEER · ↑ BOOST · SPACE / TAP ENEMY FIRE
+  <!-- // 9. CHAMPIONSHIP END -->
+  <div id="champEnd" class="screen">
+    <div class="panel center">
+      <h2 id="champTitle">🏆 CHAMPION!</h2>
+      <p id="champText"></p>
+      <p id="champStats" class="stats"></p>
+      <button id="playAgainBtn" class="btn primary">↻ PLAY AGAIN</button>
+      <button id="menuFromChampBtn" class="btn">⌂ MAIN MENU</button>
     </div>
-  </main>
-
-  <!-- // 5. TOUCH CONTROLS -->
-  <footer id="controls">
-    <button id="left">◀ LEFT</button>
-
-    <button id="boost">
-      ⚡ BOOST
-      <small id="cooldown">READY</small>
-    </button>
-
-    <button id="right">RIGHT ▶</button>
-  </footer>
+  </div>
 
 </div>
 
-<!-- // 6. GAME ENGINE -->
 <script src="game.js"></script>
-
 </body>
 </html>
