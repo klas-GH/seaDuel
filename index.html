@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- // 1. DOCUMENT SETUP -->
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+  <title>seaDuel v1.0.3</title>
+
+  <!-- // 2. STYLESHEET -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div id="game">
+
+  <!-- // 3. GAME HEADER -->
+  <header>
+    <span>⚓ seaDuel <small>v1.0.3</small></span>
+    <span>🏆 ROUND <b id="round">1</b>/11</span>
+    <span>🔵 <b id="score">0</b></span>
+  </header>
+
+  <!-- // 4. GAME ARENA -->
+  <main id="arena">
+    <canvas id="sea"></canvas>
+
+    <!-- // 4.1 PLAYER HEALTH -->
+    <div class="health player-health">
+      <div class="health-label">🔵 PLAYER</div>
+      <div class="health-track">
+        <div id="playerHP" class="health-fill player-fill"></div>
+      </div>
+      <small id="playerHPText">100%</small>
+    </div>
+
+    <!-- // 4.2 ENEMY HEALTH -->
+    <div class="health enemy-health">
+      <div class="health-label">🔴 ENEMY</div>
+      <div class="health-track">
+        <div id="enemyHP" class="health-fill enemy-fill"></div>
+      </div>
+      <small id="enemyHPText">100%</small>
+    </div>
+
+    <!-- // 4.3 GAME STATUS -->
+    <div id="hint">AIM & FIRE! 🎯</div>
+
+    <div id="roundInfo">
+      BATTLES: <b id="battleScore">0 - 0</b>
+    </div>
+
+    <!-- // 4.4 GAME OVER / ROUND ANNOUNCEMENT -->
+    <div id="message">
+      <h2 id="messageTitle">💥 SHIP DESTROYED!</h2>
+      <p id="messageText">Ready for the next battle?</p>
+      <button id="continueBtn">CONTINUE ▶</button>
+    </div>
+
+    <!-- // 4.5 HELP -->
+    <div id="help">
+      ← → STEER | ↑ BOOST | SPACE FIRE
+    </div>
+  </main>
+
+  <!-- // 5. TOUCH CONTROLS -->
+  <footer id="controls">
+    <button id="left">◀ LEFT</button>
+
+    <button id="boost">
+      ⚡ BOOST
+      <small id="cooldown">READY</small>
+    </button>
+
+    <button id="right">RIGHT ▶</button>
+  </footer>
+
+</div>
+
+<!-- // 6. GAME ENGINE -->
+<script src="game.js"></script>
+
+</body>
+</html>
