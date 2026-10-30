@@ -1,41 +1,55 @@
-# seaDuel
+# seaDuel v1.1
 
-A fast mobile-friendly naval duel mini-game.
+**COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.**
 
-Blue ship vs red AI ship on a wrapping ocean. First to 2 battle wins takes the round. 11 rounds decide the champion.
+A polished mobile-friendly naval arcade combat game. Blue player battleship vs red AI enemy on a wrapping ocean. Win 11 rounds (best-of-three battles each) to become champion.
 
 ## 🎮 Play now
 
 **https://klas-gh.github.io/seaDuel/**
 
-*(If the link is still 404, enable Pages once — see below.)*
+*(If still 404: Settings → Pages → Source → GitHub Actions)*
 
 ## Controls
 
-**Keyboard**
-- `←` `→` or `A` `D` — steer
-- `↑` or `W` — boost (2 s, 22 s cooldown)
-- `Space` — continuous fire
+### Keyboard
+| Key | Action |
+|-----|--------|
+| ← → / A D | Steer |
+| ↑ / W | Boost |
+| Space | Continuous fire |
+| Q | Shield |
+| E | Double Fire |
+| R | Torpedo |
+| Esc | Pause |
 
-**Touch / Mobile**
+### Mobile
 - Left / Right buttons
-- Boost button
-- Tap near the enemy ship to fire
+- Fire button (or tap near enemy)
+- Ability buttons: Boost, Shield, Double Fire, Torpedo
 
 ## Features
-- Progressive fire-rate upgrades each round
 - Best-of-3 battles → 11-round championship
-- Boost with visual glow + trail
-- Responsive layout for phone & desktop
+- Progressive fire-rate upgrades
+- Intelligent enemy AI (3 difficulty tiers)
+- 4 special abilities (Boost, Shield, Double Fire, Torpedo)
+- Critical hits
+- 4 ocean environments (Tropical → Stormy → Arctic → Sunset)
+- Screen shake, particles, trails, muzzle flashes
+- Procedural sound effects (Web Audio)
+- Optional vibration feedback
+- Local high-score records
+- Pause / resume / restart
+- Fully responsive (phone + desktop)
 
-## Enable GitHub Pages (one-time)
+## Files
+- `index.html` — structure & UI
+- `style.css` — layout & theme
+- `game.js` — full game engine
 
-1. Open the repo → **Settings** → **Pages**
-2. Under **Build and deployment** → **Source**, choose **GitHub Actions**
-3. Wait ~1 minute for the workflow to finish
-4. The game will be live at the link above
+No frameworks. No external assets. Pure HTML5 Canvas + Vanilla JS.
 
-Or serve locally:
+## Run locally
 
 ```bash
 python3 -m http.server
@@ -44,5 +58,4 @@ python3 -m http.server
 Then open `http://localhost:8000`
 
 ## Version
-
-**v1.0.4** — 22 s boost cooldown, boost visual polish, tap-fire fix, cleanup + Pages deploy.
+**v1.1.0** — Full upgrade from v1.0.4
