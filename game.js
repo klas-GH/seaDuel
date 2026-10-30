@@ -1,7 +1,7 @@
 /* seaDuel v1.5.0 inflate */
 (async function(){
   try {
-    var names = ['engine.e0','engine.e1','engine.e2','engine.e3'];
+    var names = ['engine.f0','engine.f1','engine.f2','engine.f3','engine.f4','engine.f5'];
     var parts = await Promise.all(names.map(function(n){ return fetch(n).then(function(r){ return r.text(); }); }));
     var bin = Uint8Array.from(atob(parts.join('').trim()), function(c){ return c.charCodeAt(0); });
     var stream = new Blob([bin]).stream().pipeThrough(new DecompressionStream('gzip'));
