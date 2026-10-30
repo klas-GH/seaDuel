@@ -1,17 +1,15 @@
-
 /* // 1. GLOBAL SETTINGS */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  background: #031b30;
-  color: white;
-  font-family: Arial, sans-serif;
+html, body {
+  height: 100%;
   overflow: hidden;
   touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  background: #031b30;
+  color: #fff;
+  font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
 }
 
 #game {
@@ -19,32 +17,137 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
   background: #031b30;
 }
 
-/* // 2. HEADER */
+/* // 2. SCREENS */
+.screen {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: #031b30ee;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 16px;
+}
 
-header {
-  height: 55px;
+.screen.active { display: flex; }
+
+#arenaWrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  flex-direction: column;
+  background: #031b30;
+  z-index: 1;
+}
+#arenaWrap.active { display: flex; }
+
+.panel {
+  background: #0a2a40;
+  border: 1px solid #2a6a8a;
+  border-radius: 16px;
+  padding: 24px 20px;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 8px 32px #0008;
+}
+
+.panel.center { text-align: center; }
+
+.menu-inner {
+  text-align: center;
+  max-width: 320px;
+}
+
+.menu-inner h1 {
+  font-size: 42px;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+  text-shadow: 0 0 20px #29b7ff88;
+}
+
+.tagline {
+  font-size: 12px;
+  color: #8ec8e0;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.version {
+  font-size: 13px;
+  color: #5a9bb0;
+  margin-bottom: 28px;
+}
+
+/* // 3. BUTTONS */
+.btn {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  margin: 8px auto;
+  padding: 14px 20px;
+  border: 1px solid #4886a7;
+  border-radius: 12px;
+  background: #104365;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.btn.primary {
+  background: #087eaa;
+  border-color: #3ec0f0;
+}
+
+.btn.danger {
+  background: #5a2020;
+  border-color: #c05050;
+}
+
+.btn:active { filter: brightness(1.25); }
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+/* // 4. HEADER */
+#header {
+  height: 48px;
   flex-shrink: 0;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-around;
+  gap: 8px;
+  padding: 0 8px;
   background: #031b30;
-  font-size: 13px;
-  font-weight: bold;
+  font-size: 12px;
+  font-weight: 700;
+  z-index: 5;
 }
 
-header span {
-  white-space: nowrap;
-}
+#header span { white-space: nowrap; }
 
-/* // 3. ARENA */
-
+/* // 5. ARENA */
 #arena {
   position: relative;
-  flex: 1;
+  flex: 1 1 auto;
   min-height: 0;
+  width: 100%;
   overflow: hidden;
   background: #075576;
 }
@@ -56,194 +159,228 @@ canvas {
   touch-action: none;
 }
 
-/* // 4. HEALTH BARS */
-
+/* // 6. HEALTH BARS */
 .health {
   position: absolute;
-  width: 125px;
-  z-index: 2;
-  top: 48px;
+  width: 120px;
+  z-index: 3;
+  top: 44px;
   pointer-events: none;
   text-shadow: 0 2px 4px #001b30;
 }
 
-.player-health {
-  left: 12px;
-}
-
-.enemy-health {
-  right: 12px;
-  text-align: right;
-}
+.player-health { left: 10px; }
+.enemy-health { right: 10px; text-align: right; }
 
 .health-label {
   font-size: 10px;
-  font-weight: bold;
-  margin-bottom: 5px;
+  font-weight: 700;
+  margin-bottom: 3px;
 }
 
 .health-track {
-  height: 9px;
-  width: 100%;
+  height: 8px;
   background: #001b30bb;
-  border: 1px solid #ffffff66;
-  border-radius: 8px;
+  border: 1px solid #ffffff55;
+  border-radius: 6px;
   overflow: hidden;
 }
 
 .health-fill {
   height: 100%;
   width: 100%;
-  transition: width .2s ease, background .2s ease;
-  border-radius: 8px;
+  transition: width .15s ease, background .2s ease;
+  border-radius: 6px;
 }
 
-.player-fill {
-  background: #29b7ff;
-}
-
-.enemy-fill {
-  background: #ff4545;
-}
+.player-fill { background: #29b7ff; }
+.enemy-fill { background: #ff4545; }
 
 .health small {
   display: block;
   font-size: 10px;
-  margin-top: 3px;
+  margin-top: 2px;
 }
-
-/* // 5. GAME STATUS */
 
 #hint {
   position: absolute;
-  top: 12px;
+  top: 10px;
   left: 0;
   width: 100%;
   text-align: center;
   color: #d4f5ff;
-  font-size: 12px;
+  font-size: 11px;
   text-shadow: 0 2px 4px #002;
   pointer-events: none;
 }
 
-#roundInfo {
+#battleScore {
   position: absolute;
-  top: 105px;
+  top: 96px;
   width: 100%;
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
   color: #d4f5ff;
   pointer-events: none;
 }
 
-/* // 6. GAME MESSAGE */
-
-#message {
-  display: none;
+#critFlash {
   position: absolute;
-  inset: 0;
-  background: #001b30eF;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 28px;
+  font-weight: 900;
+  color: #ffee44;
+  text-shadow: 0 0 12px #ff8800;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 4;
+  transition: opacity .1s;
+}
+
+#critFlash.show { opacity: 1; }
+
+/* // 7. ABILITY BAR */
+#abilityBar {
+  flex-shrink: 0;
+  width: 100%;
+  display: flex;
+  gap: 6px;
+  padding: 6px 8px;
+  background: #031b30;
+  justify-content: center;
+}
+
+.ability-btn {
+  flex: 1;
+  max-width: 90px;
+  height: 52px;
+  border: 1px solid #3a6a80;
+  border-radius: 10px;
+  background: #0d3550;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  touch-action: manipulation;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  padding: 20px;
-  z-index: 5;
+  gap: 2px;
 }
 
-#message h2 {
-  font-size: 25px;
-  margin: 0 0 10px;
+.ability-btn small {
+  font-size: 9px;
+  opacity: .85;
 }
 
-#message p {
-  font-size: 15px;
-  line-height: 1.5;
+.ability-btn:disabled { opacity: .45; }
+.ability-btn.active {
+  border-color: #4ecbff;
+  background: #156080;
+  box-shadow: 0 0 10px #29b7ff66;
 }
-
-#message button {
-  margin-top: 20px;
-  background: #087eaa;
-  flex: none;
-  max-width: 190px;
-  width: 170px;
-}
-
-/* // 7. HELP */
-
-#help {
-  position: absolute;
-  bottom: 8px;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  color: #d5f5ff99;
-  font-size: 10px;
-  pointer-events: none;
-}
+.ability-btn:active:not(:disabled) { filter: brightness(1.3); }
 
 /* // 8. TOUCH CONTROLS */
-
 #controls {
-  height: 94px;
+  height: 72px;
   flex-shrink: 0;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 10px;
+  gap: 10px;
+  padding: 8px;
   background: #031b30;
 }
 
-button {
-  height: 62px;
+#controls button {
+  height: 56px;
   flex: 1;
-  max-width: 120px;
+  max-width: 130px;
   border: 1px solid #4886a7;
-  border-radius: 13px;
+  border-radius: 12px;
   background: #104365;
-  color: white;
-  font-size: 15px;
-  font-weight: bold;
-  touch-action: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  touch-action: manipulation;
 }
 
-button:active {
-  filter: brightness(1.5);
+#controls button:active { filter: brightness(1.4); }
+
+#fireBtn {
+  background: #6a3010;
+  border-color: #ff9040;
 }
 
-#boost {
-  background: #89500c;
-  border-color: #ffc04c;
+/* // 9. HOWTO / RECORDS */
+.howto-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  text-align: left;
   font-size: 13px;
+  margin: 12px 0;
 }
 
-#boost:disabled {
-  opacity: .55;
+.howto-grid h3 {
+  font-size: 13px;
+  color: #4ecbff;
+  margin-bottom: 6px;
 }
 
-#boost small {
-  display: block;
-  font-size: 10px;
-  margin-top: 4px;
+.howto-grid p { margin: 3px 0; color: #c8e0f0; }
+
+.hint {
+  font-size: 12px;
+  color: #8ab0c0;
+  margin: 12px 0;
+  line-height: 1.4;
 }
 
-/* // 9. MOBILE ADAPTATION */
+.records-list {
+  list-style: none;
+  text-align: left;
+  margin: 12px 0;
+  font-size: 14px;
+}
 
-@media (max-width: 380px) {
-  .health {
-    width: 105px;
-  }
+.records-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid #1a4060;
+  display: flex;
+  justify-content: space-between;
+}
 
-  header {
-    font-size: 11px;
-  }
+.env-name {
+  font-size: 16px;
+  color: #4ecbff;
+  margin: 8px 0;
+}
 
-  #controls {
-    gap: 7px;
-  }
+.diff { font-size: 13px; color: #c0d8e8; }
+.upgrade { font-size: 12px; color: #ffe28a; margin: 8px 0 16px; }
 
-  button {
-    font-size: 12px;
-  }
+.stats {
+  font-size: 13px;
+  color: #a0c8d8;
+  margin: 12px 0;
+  line-height: 1.5;
+}
+
+/* // 10. MOBILE ADAPTATION */
+@media (max-width: 400px) {
+  .health { width: 100px; }
+  #header { font-size: 11px; }
+  .ability-btn { font-size: 10px; height: 48px; }
+  #controls button { font-size: 12px; height: 50px; }
+  .menu-inner h1 { font-size: 34px; }
+}
+
+@media (min-width: 700px) {
+  #controls { max-width: 480px; margin: 0 auto; }
+  #abilityBar { max-width: 480px; margin: 0 auto; }
 }
