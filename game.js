@@ -1,11 +1,13 @@
-/* seaDuel v1.3.0 - fetch + inflate engine */
+/* seaDuel v1.3.0 loader — concatenates engine parts */
 (async function(){
   try {
-    var a = await (await fetch('engine.b64.a')).text();
-    var b = await (await fetch('engine.b64.b')).text();
-    var bin = Uint8Array.from(atob((a+b).trim()), function(c){ return c.charCodeAt(0); });
-    var stream = new Blob([bin]).stream().pipeThrough(new DecompressionStream('gzip'));
-    var code = await new Response(stream).text();
+    var n = 11;
+    var parts = [];
+    for (var i = 0; i < n; i++) {
+      var t = await (await fetch('engine.p' + i + '.js')).text();
+      parts.push(t);
+    }
+    var code = parts.join('');
     var s = document.createElement('script');
     s.textContent = code;
     document.head.appendChild(s);
