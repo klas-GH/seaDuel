@@ -1,10 +1,10 @@
-# seaDuel v1.2
+# seaDuel v1.2.2
 
 **COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.**
 
 A polished mobile-friendly naval arcade combat game. Blue player battleship vs red AI enemy on a wrapping ocean. Win 11 rounds (best-of-three battles each) to become champion.
 
-## 🎮 Play now
+## Play now
 
 **https://klas-gh.github.io/seaDuel/**
 
@@ -29,40 +29,24 @@ A polished mobile-friendly naval arcade combat game. Blue player battleship vs r
 - Ability buttons: Boost, Shield, Double Fire, Torpedo
 
 ## Features
-- Best-of-3 battles → 11-round championship
+- 11-round championship, best-of-3 battles
 - Progressive fire-rate upgrades
-- Intelligent enemy AI (3 difficulty tiers)
-- 4 special abilities (Boost, Shield, Double Fire, Torpedo)
-- Critical hits with visual flash
-- 4 ocean environments (Tropical → Stormy → Arctic → Sunset)
-- Screen shake, particles, trails, muzzle flashes
-- Procedural sound effects (Web Audio)
-- Optional vibration feedback
-- Local high-score records
-- Pause freezes gameplay **and** ability cooldowns
-- Fully responsive (phone + desktop)
+- 4 environments (Tropical, Stormy, Arctic, Sunset)
+- 4 abilities: Boost, Shield, Double Fire, Torpedo
+- Crits, particles, screen shake, Web Audio SFX
+- Pause, local records, mobile + keyboard
 
-## v1.2.0 changes
-- Ability timers freeze correctly while paused
-- Better ship spawn positions (no overlap)
-- Compact controls → more battlefield space
-- Double-fire projectiles are orange and larger
-- Version bump and polish pass
+## v1.2.2
+- READY unlocks after **1.2s** read pause
+- Fix desktop combat zoom after first battle (measure canvas only when arena is visible)
 
-## Files
-- `index.html` — structure & UI
-- `style.css` — layout & theme
-- `game.js` — full game engine
+## v1.2.0
+- Pause-aware ability timers (`gameNow` / `totalPausedMs`)
+- Spawn positions 0.28 / 0.72
+- Compact UI, double-fire orange projectiles
 
-No frameworks. No external assets. Pure HTML5 Canvas + Vanilla JS.
-
-## Run locally
-
+## Local run
 ```bash
-python3 -m http.server
+python -m http.server 8080
+# open http://localhost:8080
 ```
-
-Then open `http://localhost:8000`
-
-## Version
-**v1.2.0**
