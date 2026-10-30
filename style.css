@@ -289,28 +289,141 @@ canvas {
   font-size: 11px;
   font-weight: 700;
   touch-action: manipulation;
-  position: relative;
-  overflow: hidden;
-}
-.ability-btn:active { filter: brightness(1.3); }
-.ability-btn.ready { border-color: #3ec0f0; }
-.ability-btn.cd { opacity: 0.55; }
-.ability-btn .cd-fill {
-  position: absolute;
-  left: 0; bottom: 0;
-  height: 3px;
-  background: #29b7ff;
-  width: 0%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
 }
 
-/* // 8. SHOP */
-.shop-title { font-size: 20px; margin-bottom: 8px; }
-.shop-coins { color: #ffd700; font-weight: 700; margin-bottom: 12px; }
+.ability-btn small {
+  font-size: 9px;
+  opacity: .85;
+}
+
+.ability-btn:disabled { opacity: .45; }
+.ability-btn.active {
+  border-color: #4ecbff;
+  background: #156080;
+  box-shadow: 0 0 10px #29b7ff66;
+}
+.ability-btn:active:not(:disabled) { filter: brightness(1.3); }
+
+/* // 8. TOUCH CONTROLS */
+#controls {
+  height: 64px;
+  flex-shrink: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 8px;
+  background: #031b30;
+}
+
+#controls button {
+  height: 50px;
+  flex: 1;
+  max-width: 130px;
+  border: 1px solid #4886a7;
+  border-radius: 12px;
+  background: #104365;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  touch-action: manipulation;
+}
+
+#controls button:active { filter: brightness(1.4); }
+
+#fireBtn {
+  background: #6a3010;
+  border-color: #ff9040;
+}
+
+/* // 9. HOWTO / RECORDS */
+.howto-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  text-align: left;
+  font-size: 13px;
+  margin: 12px 0;
+}
+
+.howto-grid h3 {
+  font-size: 13px;
+  color: #4ecbff;
+  margin-bottom: 6px;
+}
+
+.howto-grid p { margin: 3px 0; color: #c8e0f0; }
+
+.hint {
+  font-size: 12px;
+  color: #8ab0c0;
+  margin: 12px 0;
+  line-height: 1.4;
+}
+
+.records-list {
+  list-style: none;
+  text-align: left;
+  margin: 12px 0;
+  font-size: 14px;
+}
+
+.records-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid #1a4060;
+  display: flex;
+  justify-content: space-between;
+}
+
+.env-name {
+  font-size: 16px;
+  color: #4ecbff;
+  margin: 8px 0;
+}
+
+.diff { font-size: 13px; color: #c0d8e8; }
+.upgrade { font-size: 12px; color: #ffe28a; margin: 8px 0 16px; }
+
+.stats {
+  font-size: 13px;
+  color: #a0c8d8;
+  margin: 12px 0;
+  line-height: 1.5;
+}
+
+/* // 10. MOBILE ADAPTATION */
+@media (max-width: 400px) {
+  .health { width: 100px; }
+  #header { font-size: 11px; }
+  .ability-btn { font-size: 10px; height: 48px; }
+  #controls button { font-size: 12px; height: 50px; }
+  .menu-inner h1 { font-size: 34px; }
+}
+
+@media (min-width: 700px) {
+  #controls { max-width: 480px; margin: 0 auto; }
+  #abilityBar { max-width: 480px; margin: 0 auto; }
+}
+
+/* // 11. SHOP (v1.3) */
+#shop .panel { max-width: 400px; }
+.shop-coins {
+  font-size: 18px;
+  color: #ffe28a;
+  margin: 8px 0 16px;
+  font-weight: 700;
+}
 .shop-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
-  margin: 12px 0;
+  margin-bottom: 12px;
   text-align: left;
 }
 .shop-item {
@@ -319,31 +432,18 @@ canvas {
   border-radius: 10px;
   padding: 10px;
   cursor: pointer;
+  color: #fff;
+  font-size: 12px;
+  touch-action: manipulation;
 }
-.shop-item:active { filter: brightness(1.2); }
-.shop-item.owned { opacity: 0.55; border-color: #2a8a5a; }
-.shop-item .name { font-weight: 700; font-size: 13px; }
-.shop-item .cost { font-size: 12px; color: #8ec8e0; }
-.shop-item .desc { font-size: 11px; color: #8aa; margin-top: 2px; }
-
-/* // 9. RECORDS / HOWTO */
-.records-list, .howto-grid {
-  text-align: left;
-  font-size: 13px;
-  line-height: 1.6;
-  margin: 12px 0;
-  max-height: 50vh;
-  overflow-y: auto;
-}
-.howto-grid h3 { color: #7ec8e8; margin: 10px 0 4px; font-size: 14px; }
-.hint { font-size: 12px; color: #8ec8e0; margin: 6px 0; }
-.level-hint { margin-bottom: 10px; }
-
-/* // 10. ROUND INTRO / END */
-.round-msg {
-  font-size: 18px;
-  font-weight: 700;
+.shop-item:hover, .shop-item:active { border-color: #4ecbff; filter: brightness(1.1); }
+.shop-item.sold-out { opacity: 0.45; cursor: not-allowed; }
+.shop-item b { display: block; font-size: 13px; margin-bottom: 2px; }
+.shop-item small { color: #8ab0c0; }
+.boss-banner {
   color: #ff8844;
+  font-weight: 800;
+  font-size: 14px;
   margin: 6px 0;
   text-shadow: 0 0 8px #ff440088;
 }
@@ -357,76 +457,84 @@ canvas {
   z-index: 3;
 }
 
-/* // 11. LEVEL SELECT (v1.4) */
+
+/* // 12. LEVEL SELECT (v1.4) */
 .level-label {
   font-size: 13px;
-  color: #8ec8e0;
-  margin: 10px 0 6px;
+  color: #ffe28a;
+  font-weight: 700;
+  margin: 4px 0 8px;
+}
+.level-hint {
+  margin: 4px 0 12px !important;
+  font-size: 11px !important;
 }
 .level-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  margin-bottom: 14px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
   max-width: 280px;
+  margin: 0 auto 4px;
 }
 .level-btn {
-  min-height: 40px;
-  padding: 8px 4px;
-  border: 1px solid #4886a7;
-  border-radius: 10px;
-  background: #104365;
+  height: 36px;
+  border: 1px solid #3a6a80;
+  border-radius: 8px;
+  background: #0d3550;
   color: #fff;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
   touch-action: manipulation;
+}
+.level-btn.selected {
+  border-color: #4ecbff;
+  background: #156080;
+  box-shadow: 0 0 10px #29b7ff66;
 }
 .level-btn.locked {
   opacity: 0.35;
-  filter: grayscale(0.6);
-}
-.level-btn.current {
-  outline: 2px solid #ffcc44;
-  outline-offset: 1px;
+  cursor: not-allowed;
 }
 .level-btn:active:not(:disabled) { filter: brightness(1.25); }
 
-/* // 12. DIFFICULTY SELECT (v1.5) */
+
+/* // 13. DIFFICULTY SELECT (v1.5) */
 .diff-label {
   font-size: 13px;
   color: #8ec8e0;
-  margin: 8px 0 6px;
+  font-weight: 700;
+  margin: 2px 0 6px;
 }
 .diff-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 12px;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
   max-width: 280px;
+  margin: 0 auto 12px;
 }
 .diff-btn {
-  min-height: 44px;
-  padding: 8px 4px;
-  border: 1px solid #4886a7;
+  height: 48px;
+  border: 1px solid #3a6a80;
   border-radius: 10px;
-  background: #104365;
+  background: #0d3550;
   color: #fff;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
   cursor: pointer;
   touch-action: manipulation;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px;
 }
+.diff-btn b { font-size: 12px; letter-spacing: 0.5px; }
+.diff-btn small { font-size: 9px; opacity: 0.85; font-weight: 600; }
 .diff-btn.selected {
-  outline: 2px solid #44ccff;
-  outline-offset: 1px;
-}
-.diff-btn.easy { border-bottom: 3px solid #4caf50; }
-.diff-btn.normal { border-bottom: 3px solid #ff9800; }
-.diff-btn.hard { border-bottom: 3px solid #f44336; }
-.diff-btn.easy.selected {
-  border-color: #29b7ff;
-  background: #0a4060;
+  border-color: #4ecbff;
+  background: #156080;
   box-shadow: 0 0 10px #29b7ff66;
 }
 .diff-btn.normal.selected {
