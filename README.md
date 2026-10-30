@@ -1,4 +1,4 @@
-# seaDuel v1.1
+# seaDuel v1.2
 
 **COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.**
 
@@ -33,14 +33,21 @@ A polished mobile-friendly naval arcade combat game. Blue player battleship vs r
 - Progressive fire-rate upgrades
 - Intelligent enemy AI (3 difficulty tiers)
 - 4 special abilities (Boost, Shield, Double Fire, Torpedo)
-- Critical hits
+- Critical hits with visual flash
 - 4 ocean environments (Tropical → Stormy → Arctic → Sunset)
 - Screen shake, particles, trails, muzzle flashes
 - Procedural sound effects (Web Audio)
 - Optional vibration feedback
 - Local high-score records
-- Pause / resume / restart
+- Pause freezes gameplay **and** ability cooldowns
 - Fully responsive (phone + desktop)
+
+## v1.2.0 changes
+- Ability timers freeze correctly while paused
+- Better ship spawn positions (no overlap)
+- Compact controls → more battlefield space
+- Double-fire projectiles are orange and larger
+- Version bump and polish pass
 
 ## Files
 - `index.html` — structure & UI
@@ -58,4 +65,4 @@ python3 -m http.server
 Then open `http://localhost:8000`
 
 ## Version
-**v1.1.0** — Full upgrade from v1.0.4
+**v1.2.0**
