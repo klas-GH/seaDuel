@@ -409,3 +409,40 @@ canvas {
   #controls { max-width: 480px; margin: 0 auto; }
   #abilityBar { max-width: 480px; margin: 0 auto; }
 }
+
+/* // 11. SHOP (v1.3) */
+#shop .panel { max-width: 400px; }
+.shop-coins {
+  font-size: 18px;
+  color: #ffe28a;
+  margin: 8px 0 16px;
+  font-weight: 700;
+}
+.shop-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+.shop-item {
+  background: #0d3550;
+  border: 1px solid #3a6a80;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 12px;
+  touch-action: manipulation;
+}
+.shop-item:hover, .shop-item:active { border-color: #4ecbff; filter: brightness(1.1); }
+.shop-item.sold-out { opacity: 0.45; cursor: not-allowed; }
+.shop-item b { display: block; font-size: 13px; margin-bottom: 2px; }
+.shop-item small { color: #8ab0c0; }
+.boss-banner {
+  color: #ff8844;
+  font-weight: 800;
+  font-size: 14px;
+  margin: 6px 0;
+  text-shadow: 0 0 8px #ff440088;
+}
