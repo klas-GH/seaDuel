@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>seaDuel v1.5.1</title>
+  <title>seaDuel v1.5.2</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
     <div class="menu-inner">
       <h1>⚓ seaDuel</h1>
       <p class="tagline">COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.</p>
-      <p class="version">v1.5.1</p>
+      <p class="version">v1.5.2</p>
       <p class="diff-label" id="diffLabel">Difficulty: Easy (baseline)</p>
       <div id="diffGrid" class="diff-grid" aria-label="Select difficulty"></div>
       <p class="level-label" id="startLevelLabel">Start: Round 1</p>
@@ -38,14 +38,15 @@
           <p>↑ / W — Boost</p>
           <p>Space — Fire</p>
           <p>Q — Shield · E — D-Fire · R — Torp</p>
-          <p>Esc — Pause</p>
+          <p>Esc — Pause · Enter — Continue</p>
         </div>
         <div>
           <h3>Goals</h3>
           <p>12 rounds · Easy / Normal / Hard</p>
           <p>Earn coins → buy upgrades</p>
           <p>Lvl 6 mini-boss · Lvl 12 boss</p>
-          <p>Multi-enemy from lvl 7</p>
+          <p>2 enemies from lvl 7 · 3 from lvl 9</p>
+          <p>3rd cannon unlocks at Round 9</p>
         </div>
       </div>
       <p class="hint">Ships wrap edges. Shells dissolve at edges and always aim in a straight line on screen.</p>
@@ -79,14 +80,14 @@
       <h2>🛒 UPGRADE SHOP</h2>
       <p id="shopCoins" class="shop-coins">🪙 0 coins</p>
       <div id="shopGrid" class="shop-grid"></div>
-      <p class="hint">Spend coins earned this championship. Guns max 3.</p>
+      <p class="hint">Spend coins earned this championship. 3rd cannon from Round 9. Enter continues.</p>
       <button id="shopContinueBtn" class="btn primary">CONTINUE ▶</button>
     </div>
   </div>
 
   <div id="arenaWrap" class="screen">
     <header id="header">
-      <span>⚓ v1.5.1</span>
+      <span>⚓ v1.5.2</span>
       <span class="hdr-mid">R <b id="round">1</b>/12 · 🔵 <b id="playerRounds">0</b>–<b id="enemyRounds">0</b> · 🪙 <b id="coinHud">0</b></span>
       <button id="pauseBtn" class="icon-btn" title="Pause (Esc)">⏸ PAUSE</button>
     </header>
