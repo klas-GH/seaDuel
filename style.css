@@ -674,9 +674,9 @@ canvas {
 }
 @media (max-height: 800px) and (max-width: 420px) {
   #menu {
-    justify-content: flex-start;
-    padding-top: max(8px, env(safe-area-inset-top));
-    padding-bottom: max(8px, env(safe-area-inset-bottom));
+    justify-content: center;
+    padding-top: max(10px, env(safe-area-inset-top));
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
   }
   #menu .menu-inner h1 { font-size: 28px; margin-bottom: 0; }
   #menu .tagline { margin-bottom: 2px; font-size: 10px; }

@@ -1,5 +1,5 @@
 /* ============================================================
-   seaDuel v1.6.9 — COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.
+   seaDuel v1.6.10 — COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.
    ============================================================ */
 
 const canvas = document.querySelector('#sea');
@@ -1406,7 +1406,7 @@ window.seaDuel = {
   getAILevel, SHOP, MAX_ROUNDS, unlockThrough, difficultyMult, DIFFICULTIES, ensureUnlockMap,
   thirdGunLocked, scaledCoins, PACE, COIN_SCALE, GUN3_FROM_ROUND,
   armourMult, roleForSlot, hasAbility, ROLES, ABILITIES, projectileSpeed,
-  version: '1.6.9'
+  version: '1.6.10'
 };
 
 loadProgress();

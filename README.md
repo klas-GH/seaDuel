@@ -1,4 +1,4 @@
-# seaDuel v1.6.9
+# seaDuel v1.6.10
 
 **COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.**
 
@@ -66,6 +66,10 @@ node tests/regression.mjs
 ```
 
 ## Changelog
+
+### v1.6.10
+- Short-phone menu: keep content centered instead of top-aligned (no empty bottom area)
+- Galaxy A25: intro screen no longer overflows vertically (widened short-phone fit range)
 
 ### v1.6.9
 - Galaxy A25: intro screen no longer overflows vertically (widened short-phone fit range)
