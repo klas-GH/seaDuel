@@ -98,7 +98,7 @@ assert(SD.COIN_SCALE === 0.67, 'COIN_SCALE 0.67');
 assert(SD.GUN3_FROM_ROUND === 9, '3rd gun from round 9');
 assert(src.includes('PLAYER_BASE_FIRE = 780'), 'slower player fire start');
 assert(src.includes('PLAYER_FIRE_UPGRADE = 16'), 'slower player fire climb');
-assert(src.includes('base: 7') || src.includes('damage: 7') || src.includes('SHELL_DAMAGE = 7') || src.includes('shellDmg = 7') || src.includes('7 /* shell'), 'player shells base 7');
+assert(src.includes('base: 7') || src.includes('damage: 7') || src.includes('SHELL_DAMAGE = 7') || src.includes('shellDmg = 7') || src.includes('shellDamage = 7') || src.includes('7 /* shell'), 'player shells base 7');
 assert(src.includes('projectileSpeed(true') || src.includes('projectileSpeed(isEnemy'), 'enemy shells use projectileSpeed');
 assert(src.includes("key === 'Enter'") || src.includes('key === "Enter"') || src.includes("code === 'Enter'"), 'Enter continues');
 assert(Object.keys(SD.ROLES).length === 3, 'three roles');
@@ -142,7 +142,7 @@ assert(SD.isBossRound(), 'R12 boss');
 assert(SD.SHOP.length === 5, '5 shop items');
 assert(SD.SHOP.find(s => s.id === 'guns').max === 2, 'guns max +2');
 assert(src.includes('shopGrid') || src.includes('openShop'), 'shop present');
-vm.runInNewContext('round=8;', sandbox);
+vm.runInNewContext('round=8; upgrades.guns=1;', sandbox);
 assert(SD.thirdGunLocked(), '3rd gun lock');
 assert(!src.includes('b.x = wrap(b.x') && !src.includes('shot.x = wrap'), 'no wrap on shell x');
 for (const s of ['fire','torpedo','boost','shield','double','hit','crit','coin','buy','win','lose','boss','champ']) {
