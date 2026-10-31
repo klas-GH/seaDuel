@@ -5,7 +5,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>seaDuel v1.6.0</title>
+  <meta name="theme-color" content="#031b30">
+  <meta name="description" content="seaDuel — naval arcade, command the ocean, win the championship.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-512.png">
+  <link rel="service-worker" href="sw.js">
+  <title>seaDuel v1.6.1</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +21,7 @@
     <div class="menu-inner">
       <h1>⚓ seaDuel</h1>
       <p class="tagline">COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.</p>
-      <p class="version">v1.6.0</p>
+      <p class="version">v1.6.1</p>
       <p class="diff-label" id="diffLabel">Difficulty: Easy (baseline)</p>
       <div id="diffGrid" class="diff-grid" aria-label="Select difficulty"></div>
       <p class="level-label" id="startLevelLabel">Start: Round 1</p>
@@ -28,6 +34,11 @@
       <button id="howtoBtn" class="btn">📖 HOW TO PLAY</button>
       <button id="recordsBtn" class="btn">🏆 RECORDS</button>
       <button id="soundToggleMenu" class="btn sound-btn">🔊 SOUND: ON</button>
+      <div id="installBanner" class="install-banner" style="display:none">
+        <p>📦 Install seaDuel for offline play</p>
+        <button id="installBtn" class="btn primary">INSTALL</button>
+        <button id="installDismiss" class="btn">LATER</button>
+      </div>
     </div>
   </div>
 
@@ -92,7 +103,7 @@
 
   <div id="arenaWrap" class="screen">
     <header id="header">
-      <span>⚓ v1.6.0</span>
+      <span>⚓ v1.6.1</span>
       <span class="hdr-mid">R <b id="round">1</b>/12 · 🔵 <b id="playerRounds">0</b>–<b id="enemyRounds">0</b> · 🪙 <b id="coinHud">0</b></span>
       <button id="pauseBtn" class="icon-btn" title="Pause (Esc)">⏸ PAUSE</button>
     </header>
@@ -157,5 +168,37 @@
 
 </div>
 <script src="game.js"></script>
+<script>
+/* PWA: service worker + install banner (v1.6.1) */
+(function(){
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    });
+  }
+  let deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const banner = document.getElementById('installBanner');
+    if (banner) banner.style.display = 'block';
+  });
+  const installBtn = document.getElementById('installBtn');
+  const installDismiss = document.getElementById('installDismiss');
+  if (installBtn) installBtn.addEventListener('click', () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+  });
+  if (installDismiss) installDismiss.addEventListener('click', () => {
+    const banner = document.getElementById('installBanner');
+    if (banner) banner.style.display = 'none';
+  });
+  window.addEventListener('appinstalled', () => {
+    const banner = document.getElementById('installBanner');
+    if (banner) banner.style.display = 'none';
+  });
+})();
+</script>
 </body>
 </html>

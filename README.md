@@ -1,4 +1,4 @@
-# seaDuel v1.6.0
+# seaDuel v1.6.1
 
 **COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.**
 
@@ -53,6 +53,12 @@ Armour DR is **half** the difficulty bonus so HP and armour do not fully stack i
 | Esc | Pause |
 | Enter | Continue / Play / Resume |
 
+## PWA (v1.6.1)
+
+- **Installable** — works offline via service worker
+- **Install banner** appears on desktop browsers that support it
+- **Manifest** with app icons and standalone display
+
 ## Tests
 
 ```bash
@@ -60,6 +66,12 @@ node tests/regression.mjs
 ```
 
 ## Changelog
+
+### v1.6.1
+- Engine inlined into `game.js` (no fetch needed; works offline)
+- PWA support: `manifest.json`, `sw.js`, install banner
+- Desktop intro/menu panels now fit the viewport (scrollable, capped height)
+- Version bumped to 1.6.1
 
 ### v1.6.0
 - Pressure: faster enemy fire & shells, slower player fire climb, Normal +40% / Hard +80%
