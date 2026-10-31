@@ -622,11 +622,15 @@ canvas {
     padding: 16px 18px;
     max-height: calc(100dvh - 48px);
   }
-  #roundIntro .panel { margin-top: 8px; }
-  #roundIntroTitle { font-size: 22px; }
-  #roundIntroEnv { font-size: 14px; }
-  #roundIntroBoss { font-size: 12px; }
-  #roundIntroHint { font-size: 11px; }
+  #roundIntro { overflow: hidden; }
+  #roundIntro .panel { margin-top: 0; padding: 12px 16px; max-height: calc(100dvh - 24px); overflow: hidden; }
+  #roundIntroTitle { font-size: 20px; margin: 0 0 2px; }
+  #roundIntroEnv { font-size: 13px; margin: 2px 0; }
+  #roundIntroDiff { font-size: 12px; margin: 2px 0; }
+  #roundIntroUpgrade { font-size: 12px; margin: 2px 0; }
+  #roundIntroBoss { font-size: 11px; margin: 2px 0; }
+  #roundIntroHint { font-size: 10px; margin: 4px 0 6px; }
+  #roundReadyBtn { padding: 8px 18px; font-size: 13px; }
 }
 
 /* // 16. INSTALL BANNER (v1.6.1) */
