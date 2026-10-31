@@ -672,7 +672,7 @@ canvas {
   #menu .level-hint { margin: 1px 0 4px !important; font-size: 9px !important; }
   #menu .btn { margin: 4px auto; padding: 10px 14px; font-size: 13px; }
 }
-@media (max-height: 700px) and (max-width: 420px) {
+@media (max-height: 800px) and (max-width: 420px) {
   #menu {
     justify-content: flex-start;
     padding-top: max(8px, env(safe-area-inset-top));

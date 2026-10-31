@@ -1,4 +1,4 @@
-# seaDuel v1.6.8
+# seaDuel v1.6.9
 
 **COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.**
 
@@ -66,6 +66,10 @@ node tests/regression.mjs
 ```
 
 ## Changelog
+
+### v1.6.9
+- Galaxy A25: intro screen no longer overflows vertically (widened short-phone fit range)
+- Regression test fixes for two v1.6.6 assertions
 
 ### v1.6.8
 - Mobile menu fit: intro screen no longer overflows on narrow / short phones
