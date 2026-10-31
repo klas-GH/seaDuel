@@ -636,14 +636,27 @@ canvas {
 /* // 16. INSTALL BANNER (v1.6.1) */
 .install-banner {
   margin-top: 12px;
-  padding: 10px 14px;
+  padding: 8px 10px;
   background: #0d3550;
   border: 1px solid #3a6a80;
   border-radius: 12px;
   max-width: 320px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
 }
 .install-banner p {
-  font-size: 12px;
+  font-size: 11px;
   color: #8ec8e0;
-  margin: 0 0 8px;
+  margin: 0;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.install-banner .btn {
+  padding: 4px 8px;
+  font-size: 11px;
+  margin: 0;
 }

@@ -1,4 +1,4 @@
-# seaDuel v1.6.4
+# seaDuel v1.6.5
 
 **COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.**
 
