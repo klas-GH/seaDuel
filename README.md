@@ -67,6 +67,14 @@ node tests/regression.mjs
 
 ## Changelog
 
+### v1.6.6
+- Version unified to 1.6.6 across HTML / JS / SW / tests
+- localStorage key `seaDuel_v16` (migrates from v14 / v13)
+- Removed legacy `engine.f*` from service-worker cache (engine already inlined)
+- Install banner: fixed top overlay, auto-hides after 3 seconds
+- Desktop menu fits fully on one page (no scroll)
+- Visual juice: improved ship sprites, continuous wake + boost trail, screen shake on hits / crits / boss
+
 ### v1.6.1
 - Engine inlined into `game.js` (no fetch needed; works offline)
 - PWA support: `manifest.json`, `sw.js`, install banner
