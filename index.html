@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>seaDuel v1.5.2</title>
+  <title>seaDuel v1.6.0</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,12 +15,15 @@
     <div class="menu-inner">
       <h1>⚓ seaDuel</h1>
       <p class="tagline">COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.</p>
-      <p class="version">v1.5.2</p>
+      <p class="version">v1.6.0</p>
       <p class="diff-label" id="diffLabel">Difficulty: Easy (baseline)</p>
       <div id="diffGrid" class="diff-grid" aria-label="Select difficulty"></div>
       <p class="level-label" id="startLevelLabel">Start: Round 1</p>
       <div id="levelGrid" class="level-grid" aria-label="Select starting round"></div>
       <p class="hint level-hint">Win rounds to unlock higher start levels. Harder difficulty = tougher enemies.</p>
+      <p class="level-label" id="loadoutLabel">Loadout: Boost + Shield</p>
+      <div id="loadoutGrid" class="loadout-grid" aria-label="Pick two abilities"></div>
+      <p class="hint level-hint">Pick 2 abilities. A third choice replaces the oldest.</p>
       <button id="playBtn" class="btn primary">▶ PLAY</button>
       <button id="howtoBtn" class="btn">📖 HOW TO PLAY</button>
       <button id="recordsBtn" class="btn">🏆 RECORDS</button>
@@ -47,6 +50,8 @@
           <p>Lvl 6 mini-boss · Lvl 12 boss</p>
           <p>2 enemies from lvl 7 · 3 from lvl 9</p>
           <p>3rd cannon unlocks at Round 9</p>
+          <p>Pick 2 abilities · Hunter / Gunner / Brute</p>
+          <p>Best of 3 still decides each round</p>
         </div>
       </div>
       <p class="hint">Ships wrap edges. Shells dissolve at edges and always aim in a straight line on screen.</p>
@@ -78,7 +83,7 @@
   <div id="shop" class="screen">
     <div class="panel center">
       <h2>🛒 UPGRADE SHOP</h2>
-      <p id="shopCoins" class="shop-coins">🪙 0 coins</p>
+      <p id="shopCoins" class="shop-coins">💰 0 coins</p>
       <div id="shopGrid" class="shop-grid"></div>
       <p class="hint">Spend coins earned this championship. 3rd cannon from Round 9. Enter continues.</p>
       <button id="shopContinueBtn" class="btn primary">CONTINUE ▶</button>
@@ -87,8 +92,8 @@
 
   <div id="arenaWrap" class="screen">
     <header id="header">
-      <span>⚓ v1.5.2</span>
-      <span class="hdr-mid">R <b id="round">1</b>/12 · 🔵 <b id="playerRounds">0</b>–<b id="enemyRounds">0</b> · 🪙 <b id="coinHud">0</b></span>
+      <span>⚓ v1.6.0</span>
+      <span class="hdr-mid">R <b id="round">1</b>/12 · 🔵 <b id="playerRounds">0</b>–<b id="enemyRounds">0</b> · 💰 <b id="coinHud">0</b></span>
       <button id="pauseBtn" class="icon-btn" title="Pause (Esc)">⏸ PAUSE</button>
     </header>
 
