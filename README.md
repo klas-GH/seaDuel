@@ -1,0 +1,90 @@
+# seaDuel v1.6.0
+
+**COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.**
+
+Naval arcade — 12-round championship, coin shop, bosses, multi-enemy, **level select**, **difficulty**, **loadout**, **enemy roles**.
+
+## Play
+
+**https://klas-gh.github.io/seaDuel/**
+
+```bash
+python -m http.server 8080
+```
+
+## Difficulty (v1.6)
+
+| Mode | Enemy stats |
+|------|-------------|
+| **Easy** | Baseline |
+| **Normal** | +40% HP, shell damage, speed, fire rate · armour DR +20% |
+| **Hard** | +80% HP, shell damage, speed, fire rate · armour DR +40% |
+
+Armour DR is **half** the difficulty bonus so HP and armour do not fully stack into a sponge.
+
+**Unlocks are per difficulty.** Mid-ladder stipend: `round((N−1)×15×0.67)` coins.
+
+**Pace:** ship / shell / torpedo speeds ×0.85 (from v1.5.2).
+
+## v1.6 combat
+
+- Enemy shells faster than player shells; enemies shoot sooner
+- Player fire rate climbs slower (late game is not a laser)
+- Player shells hit harder (base 7) so fights stay short
+- **Best of 3** still decides each round (2 battle wins)
+- **Loadout:** pick 2 of 4 abilities before PLAY (others locked)
+- **Roles:** Hunter / Gunner / Brute; fleets mix roles from round 7
+
+## Other features
+
+- Level select · R6 mini-boss · R12 final boss
+- 2 enemies on R7–R8 · 3 on R9–R11
+- 3rd cannon only from Round 9
+- Enter continues on desktop
+
+## Controls
+
+| Key | Action |
+|-----|--------|
+| ← → / A D | Steer |
+| ↑ / W | Boost (if in loadout) |
+| Space | Fire |
+| Q / E / R | Shield / Double Fire / Torpedo (if in loadout) |
+| Esc | Pause |
+| Enter | Continue / Play / Resume |
+
+## Tests
+
+```bash
+node tests/regression.mjs
+```
+
+## Changelog
+
+### v1.6.0
+- Pressure: faster enemy fire & shells, slower player fire climb, Normal +40% / Hard +80%
+- Armour DR half-stack with HP (no sponge)
+- Player shells base damage 7
+- Loadout: pick 2 of 4 abilities
+- Enemy roles: Hunter, Gunner, Brute (mixed fleets from R7)
+- Best of 3 rounds kept
+
+### v1.5.2
+- 3rd cannon from Round 9 · fleet of 3 on R9–11 · Enter continue
+- Coins −33% · speed −15% · mobile polish
+
+### v1.5.1
+- Enemy armour DR · per-difficulty unlocks · mid-ladder stipend
+
+### v1.5.0
+- Difficulty Easy / Normal / Hard
+
+### v1.4.0
+- Level selector
+
+### v1.3.0
+- Direct aim, coin shop, bosses, multi-enemy
+
+## License
+
+MIT
