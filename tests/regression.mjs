@@ -78,7 +78,7 @@ vm.runInNewContext(src + '\nthis.__SD = window.seaDuel;', sandbox);
 const SD = sandbox.__SD;
 
 assert(!!SD, 'window.seaDuel exported');
-assert(SD.version === '1.6.6', 'version is 1.6.6');
+assert(SD.version === '1.6.8', 'version is 1.6.8');
 assert(src.includes('amount / dm') || src.includes('armourMult'), 'enemy armour DR present');
 assert(src.includes('playerBattles >= 2'), 'best of 3 (2 wins) kept');
 assert(src.includes('Best of 3'), 'Best of 3 UI text kept');

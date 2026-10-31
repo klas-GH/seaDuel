@@ -1,5 +1,5 @@
-/* seaDuel service worker — offline cache (v1.6.6) */
-const CACHE = 'seaDuel-v1.6.6';
+/* seaDuel service worker — offline cache (v1.6.8) */
+const CACHE = 'seaDuel-v1.6.8';
 const ASSETS = [
   './',
   './index.html',

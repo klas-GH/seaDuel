@@ -1,4 +1,4 @@
-# seaDuel v1.6.6
+# seaDuel v1.6.8
 
 **COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.**
 
@@ -66,6 +66,10 @@ node tests/regression.mjs
 ```
 
 ## Changelog
+
+### v1.6.8
+- Mobile menu fit: intro screen no longer overflows on narrow / short phones
+- Regression test fixes for two v1.6.6 assertions
 
 ### v1.6.6
 - Version unified to 1.6.6 across HTML / JS / SW / tests
