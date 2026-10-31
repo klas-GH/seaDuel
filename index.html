@@ -16,6 +16,11 @@
 </head>
 <body>
 <div id="game">
+  <div id="installBanner" class="install-banner" style="display:none" role="status">
+    <p>📦 Install seaDuel for offline play</p>
+    <button id="installBtn" class="btn primary">INSTALL</button>
+    <button id="installDismiss" class="btn">LATER</button>
+  </div>
 
   <div id="menu" class="screen active">
     <div class="menu-inner">
@@ -34,11 +39,6 @@
       <button id="howtoBtn" class="btn">📖 HOW TO PLAY</button>
       <button id="recordsBtn" class="btn">🏆 RECORDS</button>
       <button id="soundToggleMenu" class="btn sound-btn">🔊 SOUND: ON</button>
-      <div id="installBanner" class="install-banner" style="display:none">
-        <p>📦 Install seaDuel for offline play</p>
-        <button id="installBtn" class="btn primary">INSTALL</button>
-        <button id="installDismiss" class="btn">LATER</button>
-      </div>
     </div>
   </div>
 
@@ -169,7 +169,7 @@
 </div>
 <script src="game.js"></script>
 <script>
-/* PWA: service worker + install banner (v1.6.1) */
+/* PWA: service worker + 3s top install overlay (v1.6.6) */
 (function(){
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -177,26 +177,36 @@
     });
   }
   let deferredPrompt = null;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    deferredPrompt = e;
+  let hideTimer = null;
+  function hideBanner() {
     const banner = document.getElementById('installBanner');
-    if (banner) banner.style.display = 'block';
+    if (!banner) return;
+    banner.classList.remove('show');
+    setTimeout(() => { banner.style.display = 'none'; }, 280);
+    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+  }
+  function showBanner() {
+    const banner = document.getElementById('installBanner');
+    if (!banner) return;
+    banner.style.display = 'flex';
+    requestAnimationFrame(() => banner.classList.add('show'));
+    if (hideTimer) clearTimeout(hideTimer);
+    hideTimer = setTimeout(hideBanner, 3000);
+  }
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    showBanner();
   });
   const installBtn = document.getElementById('installBtn');
   const installDismiss = document.getElementById('installDismiss');
   if (installBtn) installBtn.addEventListener('click', () => {
     if (!deferredPrompt) return;
     deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; hideBanner(); });
   });
-  if (installDismiss) installDismiss.addEventListener('click', () => {
-    const banner = document.getElementById('installBanner');
-    if (banner) banner.style.display = 'none';
-  });
-  window.addEventListener('appinstalled', () => {
-    const banner = document.getElementById('installBanner');
-    if (banner) banner.style.display = 'none';
-  });
+  if (installDismiss) installDismiss.addEventListener('click', hideBanner);
+  window.addEventListener('appinstalled', () => { deferredPrompt = null; hideBanner(); });
 })();
 </script>
 </body>
