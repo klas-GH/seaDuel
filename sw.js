@@ -1,4 +1,4 @@
-/* seaDuel service worker — offline cache + install banner */
+/* seaDuel service worker — offline cache (v1.6.6) */
 const CACHE = 'seaDuel-v1.6.6';
 const ASSETS = [
   './',
@@ -7,12 +7,6 @@ const ASSETS = [
   './game.js',
   './manifest.json',
   './sw.js',
-  './engine.f0',
-  './engine.f1',
-  './engine.f2',
-  './engine.f3',
-  './engine.f4',
-  './engine.f5',
   './icon-192.png',
   './icon-512.png'
 ];
