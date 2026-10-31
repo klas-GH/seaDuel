@@ -1,5 +1,5 @@
 /* seaDuel service worker — offline cache + install banner */
-const CACHE = 'seaDuel-v1.6.1';
+const CACHE = 'seaDuel-v1.6.3';
 const ASSETS = [
   './',
   './index.html',
