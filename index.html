@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>seaDuel v1.6.0</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="game">
+
+  <div id="menu" class="screen active">
+    <div class="menu-inner">
+      <h1>⚓ seaDuel</h1>
+      <p class="tagline">COMMAND THE OCEAN. WIN THE CHAMPIONSHIP.</p>
+      <p class="version">v1.6.0</p>
+      <p class="diff-label" id="diffLabel">Difficulty: Easy (baseline)</p>
+      <div id="diffGrid" class="diff-grid" aria-label="Select difficulty"></div>
+      <p class="level-label" id="startLevelLabel">Start: Round 1</p>
+      <div id="levelGrid" class="level-grid" aria-label="Select starting round"></div>
+      <p class="hint level-hint">Win rounds to unlock higher start levels. Harder difficulty = tougher enemies.</p>
+      <p class="level-label" id="loadoutLabel">Loadout: Boost + Shield</p>
+      <div id="loadoutGrid" class="loadout-grid" aria-label="Pick two abilities"></div>
+      <p class="hint level-hint">Pick 2 abilities. A third choice replaces the oldest.</p>
+      <button id="playBtn" class="btn primary">▶ PLAY</button>
+      <button id="howtoBtn" class="btn">📖 HOW TO PLAY</button>
+      <button id="recordsBtn" class="btn">🏆 RECORDS</button>
+      <button id="soundToggleMenu" class="btn sound-btn">🔊 SOUND: ON</button>
+    </div>
+  </div>
+
+  <div id="howto" class="screen">
+    <div class="panel">
+      <h2>How to Play</h2>
+      <div class="howto-grid">
+        <div>
+          <h3>Keyboard</h3>
+          <p>← → / A D — Steer</p>
+          <p>↑ / W — Boost</p>
+          <p>Space — Fire</p>
+          <p>Q — Shield · E — D-Fire · R — Torp</p>
+          <p>Esc — Pause · Enter — Continue</p>
+        </div>
+        <div>
+          <h3>Goals</h3>
+          <p>12 rounds · Easy / Normal / Hard</p>
+          <p>Earn coins → buy upgrades</p>
+          <p>Lvl 6 mini-boss · Lvl 12 boss</p>
+          <p>2 enemies from lvl 7 · 3 from lvl 9</p>
+          <p>3rd cannon unlocks at Round 9</p>
+          <p>Pick 2 abilities · Hunter / Gunner / Brute</p>
+          <p>Best of 3 still decides each round</p>
+        </div>
+      </div>
+      <p class="hint">Ships wrap edges. Shells dissolve at edges and always aim in a straight line on screen.</p>
+      <button id="howtoClose" class="btn primary">GOT IT</button>
+    </div>
+  </div>
+
+  <div id="records" class="screen">
+    <div class="panel">
+      <h2>🏆 Local Records</h2>
+      <ul id="recordsList" class="records-list"></ul>
+      <button id="resetRecordsBtn" class="btn danger">Reset Records</button>
+      <button id="recordsClose" class="btn primary">CLOSE</button>
+    </div>
+  </div>
+
+  <div id="roundIntro" class="screen">
+    <div class="panel center">
+      <h2 id="roundIntroTitle">ROUND 1/12</h2>
+      <p id="roundIntroEnv" class="env-name">Tropical Ocean</p>
+      <p id="roundIntroDiff" class="diff">Cadet</p>
+      <p id="roundIntroUpgrade" class="upgrade">Best of 3</p>
+      <p id="roundIntroBoss" class="boss-banner" style="display:none"></p>
+      <p id="roundIntroHint" class="hint" style="margin-top:10px;opacity:.7;min-height:1.2em"></p>
+      <button id="roundReadyBtn" class="btn primary" disabled>READY ▶</button>
+    </div>
+  </div>
+
+  <div id="shop" class="screen">
+    <div class="panel center">
+      <h2>🛒 UPGRADE SHOP</h2>
+      <p id="shopCoins" class="shop-coins">🪙 0 coins</p>
+      <div id="shopGrid" class="shop-grid"></div>
+      <p class="hint">Spend coins earned this championship. 3rd cannon from Round 9. Enter continues.</p>
+      <button id="shopContinueBtn" class="btn primary">CONTINUE ▶</button>
+    </div>
+  </div>
+
+  <div id="arenaWrap" class="screen">
+    <header id="header">
+      <span>⚓ v1.6.0</span>
+      <span class="hdr-mid">R <b id="round">1</b>/12 · 🔵 <b id="playerRounds">0</b>–<b id="enemyRounds">0</b> · 🪙 <b id="coinHud">0</b></span>
+      <button id="pauseBtn" class="icon-btn" title="Pause (Esc)">⏸ PAUSE</button>
+    </header>
+
+    <main id="arena">
+      <canvas id="sea"></canvas>
+      <div class="health player-health">
+        <div class="health-label">🔵 PLAYER</div>
+        <div class="health-track"><div id="playerHP" class="health-fill player-fill"></div></div>
+        <small id="playerHPText">100%</small>
+      </div>
+      <div class="health enemy-health">
+        <div class="health-label" id="enemyLabel">🔴 ENEMY</div>
+        <div class="health-track"><div id="enemyHP" class="health-fill enemy-fill"></div></div>
+        <small id="enemyHPText">100%</small>
+      </div>
+      <div id="hint">AIM & FIRE!</div>
+      <div id="battleScore">BATTLES: <b id="battleText">0 – 0</b></div>
+      <div id="critFlash"></div>
+    </main>
+
+    <div id="abilityBar">
+      <button id="boostBtn" class="ability-btn">⚡ BOOST<small id="boostCD">READY</small></button>
+      <button id="shieldBtn" class="ability-btn">🛡 SHIELD<small id="shieldCD">READY</small></button>
+      <button id="doubleBtn" class="ability-btn">🔥 D-FIRE<small id="doubleCD">READY</small></button>
+      <button id="torpedoBtn" class="ability-btn">🚀 TORP<small id="torpedoAmmo">2</small></button>
+    </div>
+    <footer id="controls">
+      <button id="leftBtn">◀ LEFT</button>
+      <button id="fireBtn">🔥 FIRE</button>
+      <button id="rightBtn">RIGHT ▶</button>
+    </footer>
+  </div>
+
+  <div id="message" class="screen">
+    <div class="panel center">
+      <h2 id="messageTitle">BATTLE WON!</h2>
+      <p id="messageText"></p>
+      <button id="continueBtn" class="btn primary">CONTINUE ▶</button>
+    </div>
+  </div>
+
+  <div id="pause" class="screen">
+    <div class="panel center">
+      <h2>PAUSED</h2>
+      <button id="resumeBtn" class="btn primary">▶ RESUME</button>
+      <button id="restartBattleBtn" class="btn">↻ RESTART BATTLE</button>
+      <button id="soundTogglePause" class="btn sound-btn">🔊 SOUND: ON</button>
+      <button id="menuFromPauseBtn" class="btn">⌂ MAIN MENU</button>
+    </div>
+  </div>
+
+  <div id="champEnd" class="screen">
+    <div class="panel center">
+      <h2 id="champTitle">🏆 CHAMPION!</h2>
+      <p id="champText"></p>
+      <p id="champStats" class="stats"></p>
+      <button id="playAgainBtn" class="btn primary">↻ PLAY AGAIN</button>
+      <button id="menuFromChampBtn" class="btn">⌂ MAIN MENU</button>
+    </div>
+  </div>
+
+</div>
+<script src="game.js"></script>
+</body>
+</html>
