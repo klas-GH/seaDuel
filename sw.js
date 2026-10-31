@@ -19,7 +19,9 @@ const ASSETS = [
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())
+    caches.open(CACHE).then(c => {
+      return Promise.allSettled(ASSETS.map(url => c.add(url).catch(err => console.warn('Cache skip:', url))));
+    }).then(() => self.skipWaiting())
   );
 });
 
